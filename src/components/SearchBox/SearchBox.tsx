@@ -1,14 +1,20 @@
 import toast from "react-hot-toast";
 import s from "./SearchBox.module.css";
+import { FormEvent } from "react"; // Import FormEvent for event type
 
-export function SearchBox({ onSubmit }) {
-  const handleSubmit = (event) => {
+type Props = {
+  onSubmit: (text: string) => void;
+};
+
+export function SearchBox({ onSubmit }: Props) {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const form = event.target;
-    const value = event.target.elements.search.value;
+    const form = event.currentTarget;
+    const input = form.elements.search as HTMLInputElement;
+    const value = input.value.trim();
 
-    if (value.trim() === "") {
+    if (value === "") {
       toast.error("Field can't be empty!");
       form.reset();
       return;

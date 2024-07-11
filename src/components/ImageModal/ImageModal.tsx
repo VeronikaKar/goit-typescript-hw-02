@@ -1,4 +1,12 @@
 import Modal from "react-modal";
+import { KeyboardEvent, MouseEvent } from "react";
+import { Image } from "../../App";
+
+type Props = {
+  modalImg: Image;
+  modalIsOpen: boolean;
+  onCloseModal: (e: MouseEvent<HTMLDivElement> | KeyboardEvent) => void;
+};
 
 const customStyles = {
   content: {
@@ -15,20 +23,21 @@ const customStyles = {
     backgroundColor: "rgba(40, 40, 40, 0.75)",
   },
 };
-    
 
 Modal.setAppElement("#root");
 
-export function ImageModal({ modalIsOpen, onRequestClose, modalImg, onClick }) {
+export function ImageModal({ modalIsOpen, onCloseModal, modalImg }: Props) {
   return (
-    <div onClick={onClick}>
+    <div onClick={onCloseModal}>
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={onRequestClose}
+        onRequestClose={onCloseModal}
         style={customStyles}
       >
-        <img src={modalImg.url} alt={modalImg.alt} />
+        <img src={modalImg.src} alt={modalImg.alt} />
       </Modal>
     </div>
   );
 }
+
+export default ImageModal;
