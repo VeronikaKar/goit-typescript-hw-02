@@ -1,7 +1,6 @@
 import ImageCard from "../ImageCard/ImageCard";
 import s from "./ImageGallery.module.css";
 import { MouseEvent } from "react";
-
 import { Photos } from "../../App";
 
 type Props = {
@@ -18,7 +17,7 @@ export function ImageGallery({ photos, onOpenModal }: Props) {
       {photos.map((img) => (
         <li className={s.item} key={img.id}>
           <ImageCard
-            src={img.urls}
+            src={img.urls.regular}
             alt={img.alt_description}
             onOpenModal={onOpenModal}
           />

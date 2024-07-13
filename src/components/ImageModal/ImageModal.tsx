@@ -3,7 +3,7 @@ import { KeyboardEvent, MouseEvent } from "react";
 import { Image } from "../../App";
 
 type Props = {
-  modalImg: Image;
+  modalImg: Image | null;
   modalIsOpen: boolean;
   onCloseModal: (e: MouseEvent<HTMLDivElement> | KeyboardEvent) => void;
 };
@@ -34,7 +34,7 @@ export function ImageModal({ modalIsOpen, onCloseModal, modalImg }: Props) {
         onRequestClose={onCloseModal}
         style={customStyles}
       >
-        <img src={modalImg.src} alt={modalImg.alt} />
+        {modalImg && <img src={modalImg.src} alt={modalImg.alt} />}
       </Modal>
     </div>
   );

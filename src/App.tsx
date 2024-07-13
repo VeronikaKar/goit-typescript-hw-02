@@ -80,12 +80,12 @@ function App() {
     }
   };
 
-  const handleImgClick = (url: string, alt: string) => {
-    setModalImg({ src: url, alt });
+  const handleImgClick = (img: { src: string; alt: string }) => {
+    setModalImg(img);
     setModalIsOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleModalClose = (e: MouseEvent<HTMLDivElement> | KeyboardEvent) => {
     setModalIsOpen(false);
   };
 
@@ -94,14 +94,14 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <SearchBox onSubmit={handleSearchQuery} />
       {gallery.length > 0 && (
-        <ImageGallery onClick={handleImgClick} gallery={gallery} />
+        <ImageGallery onOpenModal={handleImgClick} photos={gallery} />
       )}
       {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
+      {isError && <ErrorMessage error={isError} />}
       {modalIsOpen && (
         <ImageModal
           modalIsOpen={modalIsOpen}
-          onRequestClose={handleModalClose}
+          onCloseModal={handleModalClose}
           modalImg={modalImg}
         />
       )}

@@ -1,13 +1,15 @@
-import s from "./ErrorMessage.module.css";
-
 type Props = {
-  error: string;
+  error: boolean;
 };
 
-export function ErrorMessage({ error }: Props) {
+export const ErrorMessage: React.FC<Props> = ({ error }) => {
+  if (!error) {
+    return null;
+  }
+
   return (
-    <div className={s.error__container}>
-      <p className={s.error__message}>{error}</p>
+    <div className="error-message">
+      <p>Something went wrong. Please try again later.</p>
     </div>
   );
-}
+};

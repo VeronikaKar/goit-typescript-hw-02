@@ -1,11 +1,8 @@
-import { MouseEvent } from "react";
 import s from "./ImageCard.module.css";
+import { MouseEvent } from "react";
 
 type Props = {
-  src: {
-    small: string;
-    regular: string;
-  };
+  src: string;
   alt: string;
   onOpenModal: (
     obj: { src: string; alt: string },
@@ -14,19 +11,13 @@ type Props = {
 };
 
 export function ImageCard({ src, alt, onOpenModal }: Props) {
-  const handleClick = (e: MouseEvent<HTMLImageElement>) => {
-    onOpenModal({ src: src.regular, alt }, e);
-  };
-
   return (
-    <div className={s.wrapper}>
-      <img
-        className={s.imgCard}
-        onClick={handleClick}
-        src={src.small}
-        alt={alt}
-      />
-    </div>
+    <img
+      className={s.image}
+      src={src}
+      alt={alt}
+      onClick={(e) => onOpenModal({ src, alt }, e)}
+    />
   );
 }
 
