@@ -1,6 +1,6 @@
-import { useState, useEffect, MouseEvent, KeyboardEvent } from "react";
+import { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { fetchData } from "./service/photosApi.js";
+import { fetchData, FetchDataResponse } from "./service/photosApi.ts";
 import {
   SearchBox,
   ImageGallery,
@@ -27,11 +27,6 @@ export type Image = {
   alt: string;
 };
 
-interface FetchDataResponse {
-  results: Photo[];
-  total_pages: number;
-}
-
 function App() {
   const [gallery, setGallery] = useState<Photos>([]);
   const [query, setQuery] = useState<string>("");
@@ -48,12 +43,12 @@ function App() {
       setIsError(false);
 
       try {
-        const { data }: { data: FetchDataResponse } = await fetchData(
+        const { results, total_pages }: FetchDataResponse = await fetchData(
           query,
           page
         );
-        setGallery((prevGallery) => [...prevGallery, ...data.results]);
-        setHasMore(data.results.length > 0 && page < data.total_pages);
+        setGallery((prevGallery) => [...prevGallery, ...results]);
+        setHasMore(results.length > 0 && page < total_pages);
       } catch (error) {
         setIsError(true);
       } finally {
@@ -80,12 +75,12 @@ function App() {
     }
   };
 
-  const handleImgClick = (img: { src: string; alt: string }) => {
-    setModalImg(img);
+  const handleImgClick = (photo: Photo) => {
+    setModalImg({ src: photo.urls.regular, alt: photo.alt_description });
     setModalIsOpen(true);
   };
 
-  const handleModalClose = (e: MouseEvent<HTMLDivElement> | KeyboardEvent) => {
+  const handleModalClose = () => {
     setModalIsOpen(false);
   };
 
@@ -94,10 +89,10 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <SearchBox onSubmit={handleSearchQuery} />
       {gallery.length > 0 && (
-        <ImageGallery onOpenModal={handleImgClick} photos={gallery} />
+        <ImageGallery photos={gallery} onOpenModal={handleImgClick} />
       )}
       {isLoading && <Loader />}
-      {isError && <ErrorMessage error={isError} />}
+      {isError && <ErrorMessage />}
       {modalIsOpen && (
         <ImageModal
           modalIsOpen={modalIsOpen}

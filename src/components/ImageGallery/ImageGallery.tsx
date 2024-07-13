@@ -1,13 +1,13 @@
 import ImageCard from "../ImageCard/ImageCard";
 import s from "./ImageGallery.module.css";
 import { MouseEvent } from "react";
-import { Photos } from "../../App";
+import { Photos, Photo } from "../../App";
 
 type Props = {
   photos: Photos;
   onOpenModal: (
-    obj: { src: string; alt: string },
-    e: MouseEvent<HTMLImageElement>
+    photo: Photo,
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => void;
 };
 
@@ -19,7 +19,9 @@ export function ImageGallery({ photos, onOpenModal }: Props) {
           <ImageCard
             src={img.urls.regular}
             alt={img.alt_description}
-            onOpenModal={onOpenModal}
+            onOpenModal={(e: React.MouseEvent<HTMLImageElement, MouseEvent>) =>
+              onOpenModal(img, e)
+            }
           />
         </li>
       ))}
