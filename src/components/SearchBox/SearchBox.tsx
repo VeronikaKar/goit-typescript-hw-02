@@ -19,7 +19,7 @@ export function SearchBox({ onSubmit }: Props) {
     }
 
     onSubmit(value);
-    event.currentTarget.reset(); // Reset the form after submission
+    event.currentTarget.reset(); 
   };
 
   return (
