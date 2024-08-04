@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 import { KeyboardEvent, MouseEvent } from "react";
-import { Image } from "../../App";
+import { Image } from "../../types.ts";
 
 type Props = {
   modalImg: Image | null;
@@ -39,5 +39,3 @@ export function ImageModal({ modalIsOpen, onCloseModal, modalImg }: Props) {
     </div>
   );
 }
-
-export default ImageModal;
