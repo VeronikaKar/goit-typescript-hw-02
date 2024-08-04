@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { fetchData, FetchDataResponse } from "./service/photosApi.ts";
+import { fetchData, FetchDataResponse } from "./service/photosApi";
 import {
   SearchBox,
   ImageGallery,
@@ -8,24 +8,9 @@ import {
   ErrorMessage,
   LoadMoreBtn,
   ImageModal,
-} from "./components";
+} from "./components"; // Import from './components/index.ts'
 import "./index.css";
-
-type Photo = {
-  id: string;
-  urls: {
-    small: string;
-    regular: string;
-  };
-  alt_description: string;
-};
-
-export type Photos = Photo[];
-
-export type Image = {
-  src: string;
-  alt: string;
-};
+import { Photo, Photos, Image } from "./types.ts";
 
 function App() {
   const [gallery, setGallery] = useState<Photos>([]);
@@ -92,7 +77,7 @@ function App() {
         <ImageGallery photos={gallery} onOpenModal={handleImgClick} />
       )}
       {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
+      {isError && <ErrorMessage error={true} />} {/* Pass error prop */}
       {modalIsOpen && (
         <ImageModal
           modalIsOpen={modalIsOpen}

@@ -1,7 +1,7 @@
+import React from "react";
 import ImageCard from "../ImageCard/ImageCard";
 import s from "./ImageGallery.module.css";
-import { MouseEvent } from "react";
-import { Photos, Photo } from "../../App";
+import { Photos, Photo } from "../../types";
 
 type Props = {
   photos: Photos;
@@ -11,7 +11,7 @@ type Props = {
   ) => void;
 };
 
-export function ImageGallery({ photos, onOpenModal }: Props) {
+export const ImageGallery: React.FC<Props> = ({ photos, onOpenModal }) => {
   return (
     <ul className={s.list}>
       {photos.map((img) => (
@@ -19,12 +19,10 @@ export function ImageGallery({ photos, onOpenModal }: Props) {
           <ImageCard
             src={img.urls.regular}
             alt={img.alt_description}
-            onOpenModal={(e: React.MouseEvent<HTMLImageElement, MouseEvent>) =>
-              onOpenModal(img, e)
-            }
+            onOpenModal={(e) => onOpenModal(img, e)}
           />
         </li>
       ))}
     </ul>
   );
-}
+};

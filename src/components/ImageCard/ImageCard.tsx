@@ -1,24 +1,18 @@
+import React from "react";
 import s from "./ImageCard.module.css";
-import { MouseEvent } from "react";
 
 type Props = {
   src: string;
   alt: string;
-  onOpenModal: (
-    obj: { src: string; alt: string },
-    e: MouseEvent<HTMLImageElement>
-  ) => void;
+  onOpenModal: (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => void;
 };
 
-export function ImageCard({ src, alt, onOpenModal }: Props) {
+const ImageCard: React.FC<Props> = ({ src, alt, onOpenModal }) => {
   return (
-    <img
-      className={s.image}
-      src={src}
-      alt={alt}
-      onClick={(e) => onOpenModal({ src, alt }, e)}
-    />
+    <div className={s.card}>
+      <img src={src} alt={alt} onClick={onOpenModal} />
+    </div>
   );
-}
+};
 
 export default ImageCard;
